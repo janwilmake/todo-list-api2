@@ -1,20 +1,20 @@
-# Todo List API
+# Matrix-Style Todo List
 
-A simple todo list application built with Cloudflare Workers and Durable Objects.
+A cyberpunk-themed todo list application built with Cloudflare Workers and Durable Objects. The application features a matrix-inspired design with a sleek, terminal-like interface.
 
 ## Features
 
-- Create new todos
-- List all todos
-- Toggle todo completion status
-- Delete todos
+- Create, read, update, and delete todos
 - Persistent storage using Durable Objects
-- Simple web interface
+- Matrix-style user interface with green-on-black theme
+- Responsive design using Tailwind CSS
+- Real-time updates
+- Per-IP state isolation
 
 ## API Endpoints
 
 ### GET /todos
-Returns a list of all todos
+Returns all todos for the current IP
 
 ### POST /todos
 Creates a new todo
