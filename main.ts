@@ -103,40 +103,23 @@ export default {
 
 const HTML = `
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Todo List</title>
+    <title>Todo List</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes matrix-rain {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-        .matrix-bg::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
-            pointer-events: none;
-            z-index: -1;
-        }
-    </style>
 </head>
-<body class="bg-black text-green-500 min-h-screen matrix-bg">
+<body class="bg-white text-black min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-mono mb-8 text-center">System Task Interface</h1>
+        <h1 class="text-4xl font-bold mb-8 text-center">Todo List</h1>
         
-        <div class="max-w-md mx-auto bg-black/50 p-6 rounded-lg border border-green-500">
+        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
             <div class="mb-4">
                 <input type="text" id="new-todo" 
-                       class="w-full bg-black border border-green-500 text-green-500 p-2 rounded 
-                              focus:outline-none focus:ring-2 focus:ring-green-500 font-mono"
-                       placeholder="Enter new task...">
+                       class="w-full border border-gray-300 text-black p-2 rounded 
+                              focus:outline-none focus:ring-2 focus:ring-black"
+                       placeholder="Add a new todo...">
             </div>
             
             <div id="todo-list" class="space-y-2">
@@ -159,15 +142,15 @@ const HTML = `
             todoList.innerHTML = '';
             todos.sort((a, b) => b.createdAt - a.createdAt).forEach(todo => {
                 const div = document.createElement('div');
-                div.className = 'flex items-center p-2 border border-green-500/30 rounded font-mono ' + 
-                              (todo.completed ? 'bg-green-900/20' : 'bg-black/50');
+                div.className = 'flex items-center p-2 border border-gray-200 rounded ' + 
+                              (todo.completed ? 'bg-gray-50' : 'bg-white');
                 div.innerHTML = \`
                     <input type="checkbox" \${todo.completed ? 'checked' : ''} 
-                           class="mr-2 accent-green-500"
+                           class="mr-2"
                            onchange="toggleTodo('\${todo.id}', this.checked)">
-                    <span class="\${todo.completed ? 'line-through' : ''}">\${todo.text}</span>
+                    <span class="\${todo.completed ? 'line-through text-gray-500' : ''}">\${todo.text}</span>
                     <button onclick="deleteTodo('\${todo.id}')" 
-                            class="ml-auto text-red-500 hover:text-red-400">×</button>
+                            class="ml-auto text-red-500 hover:text-red-600">×</button>
                 \`;
                 todoList.appendChild(div);
             });
