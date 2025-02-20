@@ -91,7 +91,7 @@ export default {
         });
       }
 
-      const id = env.TODO_LIST.idFromName("default");
+      const id = env.TODO_LIST.idFromName(request.headers.get("CF-Connecting-IP") || "default");
       const todoList = env.TODO_LIST.get(id);
       return await todoList.fetch(request);
     } catch (error) {
@@ -107,19 +107,28 @@ const HTML = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title>Matrix Todo List</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes matrix-fall {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .matrix-fade-in {
+            animation: matrix-fall 0.5s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-white text-black min-h-screen">
+<body class="bg-black text-green-500 min-h-screen font-mono">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8 text-center">Todo List</h1>
+        <h1 class="text-4xl font-bold mb-8 text-center matrix-fade-in">Matrix Todo List</h1>
         
-        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <div class="max-w-md mx-auto bg-black border border-green-500 p-6 rounded-lg shadow-lg matrix-fade-in">
             <div class="mb-4">
                 <input type="text" id="new-todo" 
-                       class="w-full border border-gray-300 text-black p-2 rounded 
-                              focus:outline-none focus:ring-2 focus:ring-black"
-                       placeholder="Add a new todo...">
+                       class="w-full bg-black border border-green-500 text-green-500 p-2 rounded 
+                              focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-green-700"
+                       placeholder="Enter new task...">
             </div>
             
             <div id="todo-list" class="space-y-2">
@@ -142,13 +151,13 @@ const HTML = `
             todoList.innerHTML = '';
             todos.sort((a, b) => b.createdAt - a.createdAt).forEach(todo => {
                 const div = document.createElement('div');
-                div.className = 'flex items-center p-2 border border-gray-200 rounded ' + 
-                              (todo.completed ? 'bg-gray-50' : 'bg-white');
+                div.className = 'flex items-center p-2 border border-green-500 rounded matrix-fade-in ' + 
+                              (todo.completed ? 'bg-green-900 bg-opacity-20' : 'bg-black');
                 div.innerHTML = \`
                     <input type="checkbox" \${todo.completed ? 'checked' : ''} 
-                           class="mr-2"
+                           class="mr-2 bg-black border-green-500"
                            onchange="toggleTodo('\${todo.id}', this.checked)">
-                    <span class="\${todo.completed ? 'line-through text-gray-500' : ''}">\${todo.text}</span>
+                    <span class="\${todo.completed ? 'line-through text-green-700' : 'text-green-500'}">\${todo.text}</span>
                     <button onclick="deleteTodo('\${todo.id}')" 
                             class="ml-auto text-red-500 hover:text-red-600">×</button>
                 \`;
