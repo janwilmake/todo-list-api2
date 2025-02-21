@@ -107,28 +107,44 @@ const HTML = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Todo List</title>
+    <title>Rainbow Todo List</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes matrix-fall {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .rainbow-bg {
+            background: linear-gradient(45deg, 
+                #ff0000, #ff7300, #fffb00, #48ff00, 
+                #00ffd5, #002bff, #7a00ff, #ff00c8);
+            background-size: 800% 800%;
+            animation: rainbow 8s ease infinite;
         }
-        .matrix-fade-in {
-            animation: matrix-fall 0.5s ease-out forwards;
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        .todo-item {
+            transition: all 0.3s ease;
+        }
+        
+        .todo-item:hover {
+            transform: translateX(10px);
         }
     </style>
 </head>
-<body class="bg-black text-green-500 min-h-screen font-mono">
+<body class="min-h-screen bg-gray-100">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8 text-center matrix-fade-in">Matrix Todo List</h1>
+        <div class="rainbow-bg text-white p-8 rounded-lg shadow-lg text-center mb-8">
+            <h1 class="text-4xl font-bold">Rainbow Todo List</h1>
+            <p class="mt-2">Organize your tasks with style! ✨</p>
+        </div>
         
-        <div class="max-w-md mx-auto bg-black border border-green-500 p-6 rounded-lg shadow-lg matrix-fade-in">
+        <div class="bg-white rounded-lg shadow-lg p-6">
             <div class="mb-4">
                 <input type="text" id="new-todo" 
-                       class="w-full bg-black border border-green-500 text-green-500 p-2 rounded 
-                              focus:outline-none focus:ring-2 focus:ring-green-500 placeholder-green-700"
-                       placeholder="Enter new task...">
+                       class="w-full px-4 py-2 rounded-lg border-2 border-purple-300 focus:outline-none focus:border-purple-500"
+                       placeholder="Add a new task...">
             </div>
             
             <div id="todo-list" class="space-y-2">
@@ -151,15 +167,19 @@ const HTML = `
             todoList.innerHTML = '';
             todos.sort((a, b) => b.createdAt - a.createdAt).forEach(todo => {
                 const div = document.createElement('div');
-                div.className = 'flex items-center p-2 border border-green-500 rounded matrix-fade-in ' + 
-                              (todo.completed ? 'bg-green-900 bg-opacity-20' : 'bg-black');
+                div.className = 'todo-item flex items-center p-4 bg-white border rounded-lg shadow hover:shadow-md transition-all ' + 
+                              (todo.completed ? 'bg-gray-50' : '');
                 div.innerHTML = \`
                     <input type="checkbox" \${todo.completed ? 'checked' : ''} 
-                           class="mr-2 bg-black border-green-500"
+                           class="h-5 w-5 text-purple-600 rounded focus:ring-purple-500"
                            onchange="toggleTodo('\${todo.id}', this.checked)">
-                    <span class="\${todo.completed ? 'line-through text-green-700' : 'text-green-500'}">\${todo.text}</span>
+                    <span class="ml-3 flex-grow \${todo.completed ? 'line-through text-gray-500' : ''}">\${todo.text}</span>
                     <button onclick="deleteTodo('\${todo.id}')" 
-                            class="ml-auto text-red-500 hover:text-red-600">×</button>
+                            class="ml-2 text-red-500 hover:text-red-700">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 \`;
                 todoList.appendChild(div);
             });
