@@ -6,10 +6,10 @@ compatibility_date = "2025-02-11"
 [durable_objects]
 
 bindings = [
-  { name = "TODO_LIST", class_name = "TodoListDO" },
+  { name = "TODO_DO", class_name = "TodoDO" },
 ]
 
 [[migrations]]
 
 tag = "v1"
-new_classes = ["TodoListDO"]
+new_classes = ["TodoDO"]

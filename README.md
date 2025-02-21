@@ -1,11 +1,11 @@
-# Rainbow Todo List
+# Matrix Todo List
 
-A beautiful and functional todo list application with a rainbow theme, built using Cloudflare Workers and Durable Objects.
+A Matrix-themed todo list application built with Cloudflare Workers and Durable Objects. The application features a sleek, Matrix-inspired design with green-on-black color scheme and dynamic glow effects.
 
 ## Features
 
 - Create, read, update, and delete todos
-- Rainbow-themed interface with smooth animations
+- Matrix-themed interface with glow animations
 - Persistent storage using Durable Objects
 - Per-IP state isolation (each IP address has its own todo list)
 - Responsive design using Tailwind CSS
@@ -15,7 +15,7 @@ A beautiful and functional todo list application with a rainbow theme, built usi
 - Cloudflare Workers for serverless execution
 - Durable Objects for state management
 - Tailwind CSS for styling
-- Rainbow gradient animations
+- Matrix-inspired animations and effects
 
 ## API Endpoints
 
